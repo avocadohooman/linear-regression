@@ -3,6 +3,10 @@ The aim of this project is to explore the basic concept behind machine learning.
 
 No machine learning libraries will be used for this project, to better understand the fundamentals of machine learning.
 
+In step 1 I will create a simple linear regression model, without training.
+
+Step 2 will then incorporate the gradient descent algorithm to train my model for higher confidence.
+
 ## Usage
 
 ```
