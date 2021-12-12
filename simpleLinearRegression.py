@@ -50,4 +50,4 @@ if (len(sys.argv) == 2 and sys.argv[1].isdigit() == True):
     print('predictedPrice', int(predict(km)))
     plt.scatter(x, y)
     plt.plot(x, beta0 + beta1*x, 'r')
-    plt.savefig('scatteredGraph.png')
+    plt.savefig('./graphs/simpleLinearRegressionModel.png')
