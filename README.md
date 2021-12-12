@@ -24,7 +24,7 @@ The formula for the simple regression model:
 y(estimate y) = beta0(interceptor) * beta1(slope) * x(km)
 `
 
-To get bet0, the slope, we need to first calculate the SumOfSquare of x and the SumOfSquare of y
+### Calculating the slope
 
 `
 beta1 = SSxx/SSxy
@@ -39,4 +39,17 @@ SSxx = SumOf((mean)x - x)^2
 `
 SSxy = SumOf((mean)x - x) * ((mean)y - y)
 `
+
+### Calculating the interceptor
+
+`beta0 = (mean)prices - beta1*(mean)km`
+
+
+### Combining all and creating a prediction function
+
+```
+def predict(km):
+    predictedPrice = beta0 + beta1*km
+    return predictedPrice
+```
 
