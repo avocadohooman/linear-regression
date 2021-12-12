@@ -41,12 +41,11 @@ beta1 = SSxy / SSxx
 beta0 = priceMean - beta1*kmMean
 
 ## Here we check if the arguments given are exactly 2, if not show usage
-if (len(sys.argv) != 2):
+if (len(sys.argv) != 2 or sys.argv[1].isdigit() == False):
     print('Usage: python3 simpleLinearRegression.py <km>')
 
 ## If we got 2 arguments, we take the 
-if (len(sys.argv) == 2):
-    print(type(sys.argv[1]))
+if (len(sys.argv) == 2 and sys.argv[1].isdigit() == True):
     km = float(sys.argv[1])
     print('predictedPrice', int(predict(km)))
     plt.scatter(x, y)
