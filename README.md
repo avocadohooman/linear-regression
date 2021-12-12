@@ -53,3 +53,6 @@ def predict(km):
     return predictedPrice
 ```
 
+### Example graph of a simple linear regression model
+![simpleLinearRegression](./graphs/simpleLinearRegressionModel.png?raw=true)
+
