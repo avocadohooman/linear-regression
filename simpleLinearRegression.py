@@ -5,7 +5,6 @@ import sys
 ## Simple prediction function
 def predict(km):
     predictedPrice = beta0 + beta1*km
-    ## Here we can create a scattered graph of the data set and save it as .png file
     return predictedPrice
 
 data = pd.read_csv('./data/data.csv')
