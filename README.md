@@ -60,3 +60,8 @@ def predict(km):
 ### Example graph of a simple linear regression model
 ![simpleLinearRegression](./graphs/simpleLinearRegressionModel.png?raw=true)
 
+## Step 2 - Training my model with a gradient descent algorithm
+
+Work in progress.
+
+
