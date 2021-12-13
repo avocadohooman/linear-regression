@@ -12,7 +12,7 @@ Step 2 will then incorporate the gradient descent algorithm to train my model fo
 ```
 git clone https://github.com/avocadohooman/linear-regression.git
 cd linear-regression
-python -m pip install -r requirements.txt
+python3 -m pip3 install -r requirements.txt
 python3 simpleLinearRegression.py <km>
 ```
 
