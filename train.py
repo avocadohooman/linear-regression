@@ -20,23 +20,36 @@ def getCsvFileName() -> str:
 	return csvFile
 
 # Here we parse the CSV file and store the data 
-# filename: string
-def parseCsvFile(filename:str):
+# In case the file doesn't exist we throw an error
+def parseCsvFile(filename:str) -> list:
+	dataset = list()
 	try:
 		file: TextIOWrapper = open(filename, "r")
 		with file:
 			lines = reader(file)
-			dataset = list(lines)
+			for row in lines:
+				if not row:
+					continue
+				dataset.append(row)
 			print('Loaded dataset {0} with {1} rows and {2} columns'.format(filename, len(dataset), len(dataset[0])))
 			return dataset
 	except OSError:
 		print('Could not open/find file: ', filename)
-	
+
+def convertStrToFloat(dataset, column):
+	for idx, row in enumerate(dataset):
+		if idx == 0:
+			continue
+		else:
+			row[column] = float(row[column].strip())
 
 def main():
 	csvFile:str = './data/'
 	csvFile += getCsvFileName()
 	dataset = parseCsvFile(csvFile)
+	for i in range(len(dataset[0])):
+		convertStrToFloat(dataset, i)
 
+# argv[1].isdigit()
 if __name__ == "__main__":
 	main()
