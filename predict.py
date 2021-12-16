@@ -48,6 +48,8 @@ def main():
 	if (len(sys.argv) == 2 and sys.argv[1].isdigit() == True):
 		km = float(sys.argv[1])
 		print('predictedPrice', int(predict(km)))
+		print('x', x)
+		print('y', y)
 		plt.scatter(x, y)
 		plt.plot(x, beta0 + beta1*x, 'r')
 		plt.savefig('./graphs/simpleLinearRegressionModel.png')

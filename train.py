@@ -1,9 +1,10 @@
+import csv
 from io import TextIOWrapper
 import math
 from csv import reader
 import sys
 import os
-from utils import printList, calculateMean
+from utils import printList, calculateMean, createScatterGraph
 
 # Here we prompt the user to provide the filne name of the data set for training the model
 # The file needs to be located in ./data
@@ -35,7 +36,7 @@ def parseCsvFile(filename:str) -> list:
 			print('Loaded dataset {0} with {1} rows and {2} columns'.format(filename, len(dataset), len(dataset[0])))
 			return dataset
 	except OSError:
-		print('Could not open/find file: ', filename)
+		sys.exit('Could not open/find file: {0}'.format(filename))
 
 # Converting string values to floats and removing any whitespaces with strip()
 def convertStrToFloat(dataset:list, column: int):
@@ -59,23 +60,26 @@ def getMinMax(dataset:list) -> list:
 		minmax.append([valueMin, valueMax])
 	return minmax
 
-# normalize data with the equation normalizedValue = value - min / max - min
-# here we normaize data between the rane 0 - 1
+# normalizing data with the equation normalizedValue = value - min / max - min
+# here we normaize data between the range 0 - 1
 def normalizeData(dataset: list, minmax: list):
 	for row in dataset:
 		for i in range(len(row)):
 			row[i] = (row[i] - minmax[i][0]) / (minmax[i][1] - minmax[i][0])
 
 def main():
-	csvFile:str = './data/'
-	csvFile += getCsvFileName()
-	dataset = parseCsvFile(csvFile)
-	dataset = removeNonDigitValues(dataset)
-	for i in range(len(dataset[0])):
-		convertStrToFloat(dataset, i)
-	minmax = getMinMax(dataset)
-	normalizeData(dataset, minmax)
-	means = calculateMean(dataset)
+	csvFile:str
+	csvFile = getCsvFileName()
+	csvFilePath = './data/' + csvFile
+	dataset:list = parseCsvFile(csvFilePath)
+	createScatterGraph(dataset, csvFile)
+	filtereDataSet = removeNonDigitValues(dataset)
+	for i in range(len(filtereDataSet[0])):
+		convertStrToFloat(filtereDataSet, i)
+	minmax:list = getMinMax(filtereDataSet)
+	normalizeData(filtereDataSet, minmax)
+	means:list = calculateMean(filtereDataSet)
 
 if __name__ == "__main__":
 	main()
+
