@@ -36,6 +36,7 @@ def parseCsvFile(filename:str) -> list:
 	except OSError:
 		print('Could not open/find file: ', filename)
 
+# Converting string values to floats and removing any whitespaces with strip()
 def convertStrToFloat(dataset, column):
 	for idx, row in enumerate(dataset):
 		if idx == 0:
@@ -50,6 +51,5 @@ def main():
 	for i in range(len(dataset[0])):
 		convertStrToFloat(dataset, i)
 
-# argv[1].isdigit()
 if __name__ == "__main__":
 	main()
