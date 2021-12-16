@@ -39,14 +39,18 @@ beta1 = SSxy / SSxx
 ## Calculating the interceptor: beta0 = (mean)y - beta1*(mean)x
 beta0 = priceMean - beta1*kmMean
 
-## Here we check if the arguments given are exactly 2, if not show usage
-if (len(sys.argv) != 2 or sys.argv[1].isdigit() == False):
-    print('Usage: python3 simpleLinearRegression.py <km>')
+def main():
+	## Here we check if the arguments given are exactly 2, if not show usage
+	if (len(sys.argv) != 2 or sys.argv[1].isdigit() == False):
+		print('Usage: python3 simpleLinearRegression.py <km>')
 
-## If we got 2 arguments, we take the 
-if (len(sys.argv) == 2 and sys.argv[1].isdigit() == True):
-    km = float(sys.argv[1])
-    print('predictedPrice', int(predict(km)))
-    plt.scatter(x, y)
-    plt.plot(x, beta0 + beta1*x, 'r')
-    plt.savefig('./graphs/simpleLinearRegressionModel.png')
+	## If we got 2 arguments, we take the 
+	if (len(sys.argv) == 2 and sys.argv[1].isdigit() == True):
+		km = float(sys.argv[1])
+		print('predictedPrice', int(predict(km)))
+		plt.scatter(x, y)
+		plt.plot(x, beta0 + beta1*x, 'r')
+		plt.savefig('./graphs/simpleLinearRegressionModel.png')
+
+if __name__ == "__main__":
+	main()
