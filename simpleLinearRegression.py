@@ -33,7 +33,7 @@ data['diffPrice'] = priceMean - y
 
 SSxy = (data.diffkm * data.diffPrice).sum()
 
-## Calculating the Slop
+## Calculating the Slope
 beta1 = SSxy / SSxx
 
 ## Calculating the interceptor: beta0 = (mean)y - beta1*(mean)x
