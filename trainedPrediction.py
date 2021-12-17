@@ -9,14 +9,20 @@ def getUserInput():
 		print("Please enter a value for the prediction")
 		try:
 			value = input()
-			if (value):
+			if (int(value) >= 0):
 				break 
+			else:
+				print('Not a valid value for the prediction model. Needs to be >= 0')
+		except ValueError:
+			print('Not a valid value for the prediction model. Needs to be >= 0')
 		except EOFError:
 			sys.exit('Error on Input. Exit..')
 		except:
 			sys.exit('Error on Input. Exit...')
 	return float(value)
 
+# Here we are loading the latest value for the coeffiecients beta0 and beta1
+# which have been trained with trainModel.py
 def getTrainedCoeffiecients():
 	b0, b1 = 0, 0
 	try:
@@ -32,7 +38,7 @@ def getTrainedCoeffiecients():
 		sys.exit('Could not load latest beta0, beta1 values. Exit...')
 	return (b0,b1)
 
-# Simple prediction function
+# Simple linear regression equation
 def predict(b0, b1, predictionValue):
     predictedPrice = b0 + b1*predictionValue
     return predictedPrice
