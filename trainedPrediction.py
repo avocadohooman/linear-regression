@@ -55,6 +55,10 @@ def predict(coeff,minMaxX,minMaxY, inputValue):
 	maxY = minMaxY[0][1]
 	predictedPrice = float(b0) + float(b1)*normalizeElemt(minX, maxX, inputValue)
 	return denormalizeElem(minY, maxY, predictedPrice)
+def getData():
+	data = pd.read_csv('./data/data.csv')
+	x = data.km
+	y = data.price
 
 def main():
 	inputValue = getUserInput()
@@ -62,7 +66,7 @@ def main():
 	minMaxX = list
 	minMaxY = list
 	coeff,minMaxX,minMaxY = getTrainedCoeffiecients()
-	print('predictedPrice', predict(coeff, minMaxX, minMaxY, inputValue))
+	print('predictedPrice', int(predict(coeff, minMaxX, minMaxY, inputValue)))
 
 if __name__ == "__main__":
 	main()

@@ -4,7 +4,7 @@ import math
 from csv import reader, writer
 import sys
 import os
-from utils import printList, calculateMean, createScatterGraph
+from utils import printList, calculateMean, createRealValueGraph, createNormalizedGraph
 
 # Here we prompt the user to provide the filne name of the data set for training the model
 # The file needs to be located in ./data
@@ -108,7 +108,6 @@ def main():
 	csvFile = getCsvFileName()
 	csvFilePath = './data/' + csvFile
 	dataset:list = parseCsvFile(csvFilePath)
-	createScatterGraph(dataset, csvFile)
 	filtereDataSet = removeNonDigitValues(dataset)
 	for i in range(len(filtereDataSet[0])):
 		convertStrToFloat(filtereDataSet, i)
@@ -119,8 +118,9 @@ def main():
 	tbeta0, tbeta1 = gradientDecent(filtereDataSet, 0.01, 500)
 	fileName = './coefficients/b0b1.csv'
 	print('tbeta0, tbeta1', tbeta0, tbeta1)
+	createRealValueGraph(csvFile, tbeta0, tbeta1)
+	createNormalizedGraph(filtereDataSet, csvFile, tbeta0, tbeta1)
 	saveCoefficient(tbeta0, tbeta1, minmax, fileName)
-
 
 if __name__ == "__main__":
 	main()

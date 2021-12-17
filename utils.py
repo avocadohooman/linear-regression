@@ -17,15 +17,35 @@ def calculateMean(dataset: list) -> list:
 	return means
 
 # Printing a scatter graph of current data set in ./graph folder 
-def createScatterGraph(dataSet: list, dataSetName: str):
-	data = pd.read_csv('./data/{0}'.format(dataSetName))
+def createRealValueGraph(dataSetName: str, beta0, beta1):
+	dataReal = pd.read_csv('./data/{0}'.format(dataSetName))
 	graphName = dataSetName.split('.')
-	columnOne = dataSet[0][0]
-	columnTwo = dataSet[0][1]
-	x = data[columnOne]
-	y = data[columnTwo]
+	xReal = dataReal[dataReal.columns[0]]
+	yReal = dataReal[dataReal.columns[1]]
+	plt.scatter(xReal, yReal)
+	plt.title('Real values')
+	plt.xlabel('Km')
+	plt.ylabel('Price')
+	plt.savefig('./graphs/{0}_real.png'.format(graphName[0]))
+	plt.clf()
+
+# Printing a scatter graph of current data set in ./graph folder 
+def createNormalizedGraph(dataSet: list, dataSetName: str, beta0, beta1):
+	graphName = dataSetName.split('.')
+	for i in range (len(dataSet[0])):
+		if i == 0:
+			x = [row[i] for row in dataSet]
+		else:
+			y = [row[i] for row in dataSet]
+	printList('x', x)
+	plt.title('Normalized values')
+	plt.xlabel('Km')
+	plt.ylabel('Price')
 	plt.scatter(x, y)
-	plt.savefig('./graphs/{0}.png'.format(graphName[0]))
+	# plt.plot(x, beta0 + beta1 * x, 'r')
+	plt.savefig('./graphs/{0}_normalized.png'.format(graphName[0]))
+	plt.clf()
+
 
 def normalizeElemt(min, max, inputValue):
 	return ((float(inputValue) - float(min)) / (float(max) - float(min)))

@@ -57,6 +57,7 @@ def main():
 		km = float(sys.argv[1])
 		print('predictedPrice', int(predict(km, beta0, beta1)))
 		plt.scatter(x, y)
+		print(beta0, beta1)
 		plt.plot(x, beta0 + beta1*x, 'r')
 		plt.savefig('./graphs/simpleLinearRegressionModel.png')
 
