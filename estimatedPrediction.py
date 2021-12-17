@@ -18,7 +18,7 @@ y = data.price
 ## To get bet0, the slope, we need to first calculate the SumOfSquare of x and the SumOfSquare of y
 ## beta1 = SSxx/SSxy
 
-## SSxx = SumOf((mean)x - x)^2
+## variance: SSxx = SumOf((mean)x - x)^2 
 kmMean = x.mean()
 data['kmMean'] = kmMean
 data['diffkm'] = kmMean - x
@@ -26,14 +26,14 @@ data['diffkmSquared'] = data.diffkm ** 2
 
 SSxx = data.diffkmSquared.sum()
 
-## SSxy = SumOf((mean)x - x) * ((mean)y - y)
+## covariance: SSxy = SumOf((mean)x - x) * ((mean)y - y)
 priceMean = y.mean()
 data['priceMean'] = priceMean
 data['diffPrice'] = priceMean - y
 
 SSxy = (data.diffkm * data.diffPrice).sum()
 
-## Calculating the Slope
+## Calculating the Slope = beta1 = covariance/variance
 beta1 = SSxy / SSxx
 
 ## Calculating the interceptor: beta0 = (mean)y - beta1*(mean)x

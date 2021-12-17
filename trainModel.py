@@ -79,6 +79,7 @@ def main():
 	minmax:list = getMinMax(filtereDataSet)
 	normalizeData(filtereDataSet, minmax)
 	means:list = calculateMean(filtereDataSet)
+	print('means', means)
 
 if __name__ == "__main__":
 	main()

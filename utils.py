@@ -16,7 +16,7 @@ def calculateMean(dataset: list) -> list:
 		means[i] = sum(columnValue) / float(len(dataset))
 	return means
 
-# # Printing a scatter graph in ./graph folder 
+# Printing a scatter graph of current data set in ./graph folder 
 def createScatterGraph(dataSet: list, dataSetName: str):
 	data = pd.read_csv('./data/{0}'.format(dataSetName))
 	graphName = dataSetName.split('.')
