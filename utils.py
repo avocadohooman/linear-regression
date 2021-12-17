@@ -26,3 +26,10 @@ def createScatterGraph(dataSet: list, dataSetName: str):
 	y = data[columnTwo]
 	plt.scatter(x, y)
 	plt.savefig('./graphs/{0}.png'.format(graphName[0]))
+
+def normalizeElemt(min, max, inputValue):
+	return ((float(inputValue) - float(min)) / (float(max) - float(min)))
+
+def	denormalizeElem(min, max, predictedValue):
+	return ((float(predictedValue) * (float(max) - float(min))) + float(min))
+

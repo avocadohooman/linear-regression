@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import sys
 from csv import reader
+from utils import normalizeElemt, denormalizeElem
 
 # Get user input
 def getUserInput():
@@ -24,29 +25,44 @@ def getUserInput():
 # Here we are loading the latest value for the coeffiecients beta0 and beta1
 # which have been trained with trainModel.py
 def getTrainedCoeffiecients():
-	b0, b1 = 0, 0
+	coeff = list()
+	minMaxX = list()
+	minMaxY = list()
 	try:
 		file = open('./coefficients/b0b1.csv', "r")
 		with file:
 			lines = reader(file)
-			for row in lines:
+			for idx, row in enumerate(lines):
 				if not row:
 					continue
-				b0 = float(row[0])
-				b1 = float(row[1])
+				if (idx == 0):
+					coeff.append(row)
+				elif (idx == 1):
+					minMaxX.append(row)
+				elif (idx == 2):
+					minMaxY.append(row)
 	except OSError:
 		sys.exit('Could not load latest beta0, beta1 values. Exit...')
-	return (b0,b1)
+	return (coeff,minMaxX,minMaxY)
 
 # Simple linear regression equation
-def predict(b0, b1, predictionValue):
-    predictedPrice = b0 + b1*predictionValue
-    return predictedPrice
+def predict(coeff,minMaxX,minMaxY, inputValue):
+	b0 = coeff[0][0]
+	b1 = coeff[0][1]
+	minX = minMaxX[0][0]
+	minY = minMaxY[0][0]
+	maxX = minMaxX[0][1]
+	maxY = minMaxY[0][1]
+	predictedPrice = float(b0) + float(b1)*normalizeElemt(minX, maxX, inputValue)
+	return denormalizeElem(minY, maxY, predictedPrice)
 
 def main():
-	predictionValue = getUserInput()
-	b0, b1 = getTrainedCoeffiecients()
-	print('predictedPrice', predict(b0, b1, predictionValue))
+	inputValue = getUserInput()
+	coeff = list
+	minMaxX = list
+	minMaxY = list
+	coeff,minMaxX,minMaxY = getTrainedCoeffiecients()
+	print('predictedPrice', predict(coeff, minMaxX, minMaxY, inputValue))
 
 if __name__ == "__main__":
 	main()

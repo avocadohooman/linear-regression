@@ -1,7 +1,7 @@
 import csv
 from io import TextIOWrapper
 import math
-from csv import reader
+from csv import reader, writer
 import sys
 import os
 from utils import printList, calculateMean, createScatterGraph
@@ -33,8 +33,10 @@ def parseCsvFile(filename:str) -> list:
 				if not row:
 					continue
 				dataset.append(row)
-			print('Loaded dataset {0} with {1} rows and {2} columns'.format(filename, len(dataset), len(dataset[0])))
-			return dataset
+			if len(dataset[0]) == 2:
+				print('Loaded dataset {0} with {1} rows and {2} columns'.format(filename, len(dataset), len(dataset[0])))
+				return dataset
+			sys.exit('Error: dataset needs to have exactly 2 colummns')
 	except OSError:
 		sys.exit('Could not open/find file: {0}'.format(filename))
 
@@ -46,7 +48,7 @@ def convertStrToFloat(dataset:list, column: int):
 # remove any non digit rows from the dataset
 def removeNonDigitValues(dataset: list) -> list:
 	for idx, row in enumerate(dataset):
-		if row[0].isdigit() == False or row[1].isdigit() == False:
+		if row[0].strip().isdigit() == False or row[1].strip().isdigit() == False:
 			dataset.pop(idx)
 	return dataset
 
@@ -67,6 +69,40 @@ def normalizeData(dataset: list, minmax: list):
 		for i in range(len(row)):
 			row[i] = (row[i] - minmax[i][0]) / (minmax[i][1] - minmax[i][0])
 
+# here we get the current yhat value with the current beta0 and beta1 coefficient
+def predict(row, beta0, beta1):
+	yhat = beta0
+	for i in range(len(row)-1):
+		yhat += beta1 * row[i]
+	return yhat
+
+# this gradientdecent algorithm estimates the linear regression coefficients beta0 and beta1
+# the basic equation we are using for estimating the coefficient is:
+# b(coefficent) = b - learning rate(configured learning rate) * error(prediction error) * inputValue
+# error = yhat(prediction) - expected_value_i
+# b0(t+1) = b0 - learning rate * error
+# b1(t+1) = b1 - learning rate * error * input_value_i
+def gradientDecent(train, learningRate, numberEpoche):
+	beta0 = 0.0
+	beta1 = 0.0
+	for epoch in range(numberEpoche):
+		sumError = 0
+		for row in train:
+			predictedValue = predict(row, beta0, beta1)
+			error = predictedValue - row[-1]
+			sumError += error ** 2
+			beta0 = beta0 - learningRate * error
+			for i in range(len(row)-1):
+				beta1 = beta1 - learningRate * error * row[i]
+		print('>>>>>epoch=%d, learningRate=%.3f, error=%.3f' % (epoch, learningRate, sumError))
+	return beta0, beta1
+
+def saveCoefficient(tbeta0, tbeta1, minmax, file):
+	with open(file, 'w') as csvFile:
+		csvWriter = writer(csvFile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+		csvWriter.writerow([tbeta0, tbeta1])
+		csvWriter.writerows(minmax)
+
 def main():
 	csvFile:str
 	csvFile = getCsvFileName()
@@ -78,8 +114,13 @@ def main():
 		convertStrToFloat(filtereDataSet, i)
 	minmax:list = getMinMax(filtereDataSet)
 	normalizeData(filtereDataSet, minmax)
-	means:list = calculateMean(filtereDataSet)
-	print('means', means)
+	tbeta0 = 0.0
+	tbeta1 = 0.0
+	tbeta0, tbeta1 = gradientDecent(filtereDataSet, 0.01, 500)
+	fileName = './coefficients/b0b1.csv'
+	print('tbeta0, tbeta1', tbeta0, tbeta1)
+	saveCoefficient(tbeta0, tbeta1, minmax, fileName)
+
 
 if __name__ == "__main__":
 	main()
