@@ -103,6 +103,12 @@ def saveCoefficient(tbeta0, tbeta1, minmax, file):
 		csvWriter.writerow([tbeta0, tbeta1])
 		csvWriter.writerows(minmax)
 
+def saveNormalizedData(filtereDataSet, file):
+	with open(file, 'w') as csvFile:
+		csvWriter = writer(csvFile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+		csvWriter.writerow(['km', 'price'])
+		csvWriter.writerows(filtereDataSet)
+
 def main():
 	csvFile:str
 	csvFile = getCsvFileName()
@@ -117,11 +123,13 @@ def main():
 	tbeta1 = 0.0
 	tbeta0, tbeta1 = gradientDecent(filtereDataSet, 0.01, 500)
 	fileName = './coefficients/b0b1.csv'
+	normalizedFileName = './data/normalized.csv'
 	print('tbeta0, tbeta1', tbeta0, tbeta1)
 	createRealValueGraph(csvFile, tbeta0, tbeta1)
-	createNormalizedGraph(filtereDataSet, csvFile, tbeta0, tbeta1)
+	# createNormalizedGraph(filtereDataSet, csvFile, tbeta0, tbeta1)
 	saveCoefficient(tbeta0, tbeta1, minmax, fileName)
+	saveNormalizedData(filtereDataSet, normalizedFileName)
+	createNormalizedGraph('normalized.csv', tbeta0, tbeta1)
 
 if __name__ == "__main__":
 	main()
-
