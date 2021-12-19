@@ -123,12 +123,12 @@ def main():
 	tbeta1 = 0.0
 	tbeta0, tbeta1 = gradientDecent(filtereDataSet, 0.01, 500)
 	fileName = './coefficients/b0b1.csv'
-	normalizedFileName = './data/normalized.csv'
+	normalizedFileName = './data/normalized_{0}'.format(csvFile)
 	print('tbeta0, tbeta1', tbeta0, tbeta1)
-	createRealValueGraph(csvFile, tbeta0, tbeta1)
 	saveCoefficient(tbeta0, tbeta1, minmax, fileName)
 	saveNormalizedData(filtereDataSet, normalizedFileName)
-	createNormalizedGraph('normalized.csv', tbeta0, tbeta1)
+	createNormalizedGraph('normalized_{0}'.format(csvFile), tbeta0, tbeta1)
+	createRealValueGraph(csvFile, tbeta0, tbeta1)
 
 if __name__ == "__main__":
 	main()

@@ -55,6 +55,7 @@ def predict(coeff,minMaxX,minMaxY, inputValue):
 	maxY = minMaxY[0][1]
 	predictedPrice = float(b0) + float(b1)*normalizeElemt(minX, maxX, inputValue)
 	return denormalizeElem(minY, maxY, predictedPrice)
+
 def getData():
 	data = pd.read_csv('./data/data.csv')
 	x = data.km

@@ -26,7 +26,7 @@ def createRealValueGraph(dataSetName: str, beta0, beta1):
 	plt.title('Real values')
 	plt.xlabel('Km')
 	plt.ylabel('Price')
-	plt.plot(xReal, beta0 + beta1 * xReal, 'r')
+	# plt.plot(xReal, beta0 + beta1 * xReal, 'r')
 	plt.savefig('./graphs/{0}_real.png'.format(graphName[0]))
 	plt.clf()
 
@@ -40,7 +40,7 @@ def createNormalizedGraph(dataSetName: str, beta0, beta1):
 	plt.ylabel('Price')
 	plt.scatter(xNorm, yNorm)
 	plt.plot(xNorm, beta0 + beta1 * xNorm, 'r')
-	plt.savefig('./graphs/{0}_normalized.png'.format(graphName[0]))
+	plt.savefig('./graphs/{0}.png'.format(graphName[0]))
 	plt.clf()
 
 
