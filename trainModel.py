@@ -126,7 +126,6 @@ def main():
 	normalizedFileName = './data/normalized.csv'
 	print('tbeta0, tbeta1', tbeta0, tbeta1)
 	createRealValueGraph(csvFile, tbeta0, tbeta1)
-	# createNormalizedGraph(filtereDataSet, csvFile, tbeta0, tbeta1)
 	saveCoefficient(tbeta0, tbeta1, minmax, fileName)
 	saveNormalizedData(filtereDataSet, normalizedFileName)
 	createNormalizedGraph('normalized.csv', tbeta0, tbeta1)

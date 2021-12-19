@@ -54,10 +54,10 @@ def main():
 		beta1 = covariance / variance
 		## Calculating the interceptor: beta0 = (mean)y - beta1*(mean)x
 		beta0 = y.mean() - beta1*x.mean()
+		print('beta0, beta1', beta0, beta1)
 		km = float(sys.argv[1])
 		print('predictedPrice', int(predict(km, beta0, beta1)))
 		plt.scatter(x, y)
-		print(beta0, beta1)
 		plt.plot(x, beta0 + beta1*x, 'r')
 		plt.savefig('./graphs/simpleLinearRegressionModel.png')
 
