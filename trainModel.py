@@ -4,7 +4,8 @@ import math
 from csv import reader, writer
 import sys
 import os
-from utils import printList, calculateMean, createRealValueGraph, createNormalizedGraph
+from utils import printList, calculateMean, createNormalizedGraph
+from leastSquaresPrediction import createRealValueGraph
 
 # Here we prompt the user to provide the filne name of the data set for training the model
 # The file needs to be located in ./data
@@ -128,7 +129,7 @@ def main():
 	saveCoefficient(tbeta0, tbeta1, minmax, fileName)
 	saveNormalizedData(filtereDataSet, normalizedFileName)
 	createNormalizedGraph('normalized_{0}'.format(csvFile), tbeta0, tbeta1)
-	createRealValueGraph(csvFile, tbeta0, tbeta1)
+	createRealValueGraph(csvFile)
 
 if __name__ == "__main__":
 	main()

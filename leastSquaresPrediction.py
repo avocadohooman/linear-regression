@@ -39,6 +39,24 @@ def calculateCovariance(data, y):
 	SSxy = (data.diffkm * data.diffPrice).sum()
 	return SSxy
 
+def createRealValueGraph(dataSetName: str):
+	dataReal = pd.read_csv('./data/{0}'.format(dataSetName))
+	x, y = getColumnValues(dataReal)
+	graphName = dataSetName.split('.')
+	variance = calculateVariance(dataReal, x)
+	covariance = calculateCovariance(dataReal, y)
+	## Calculating the Slope = beta1 = covariance/variance
+	beta1 = covariance / variance
+	## Calculating the interceptor: beta0 = (mean)y - beta1*(mean)x
+	beta0 = y.mean() - beta1*x.mean()
+	plt.title('Real values')
+	plt.xlabel('Km')
+	plt.ylabel('Price')
+	plt.scatter(x, y)
+	plt.plot(x, beta0 + beta1*x, 'r')
+	plt.savefig('./graphs/{0}_real.png'.format(graphName[0]))
+	plt.clf()
+
 def main():
 	## Here we check if the arguments given are exactly 2, if not show usage
 	if (len(sys.argv) != 2 or sys.argv[1].isdigit() == False):
@@ -57,6 +75,9 @@ def main():
 		print('beta0, beta1', beta0, beta1)
 		km = float(sys.argv[1])
 		print('predictedPrice', int(predict(km, beta0, beta1)))
+		plt.title('Real values')
+		plt.xlabel('Km')
+		plt.ylabel('Price')
 		plt.scatter(x, y)
 		plt.plot(x, beta0 + beta1*x, 'r')
 		plt.savefig('./graphs/simpleLinearRegressionModel.png')

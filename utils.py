@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import pandas as pd
+from leastSquaresPrediction import createRealValueGraph
 
 # Nice way of printing a list
 def printList(label: str, list: list):
@@ -16,25 +17,11 @@ def calculateMean(dataset: list) -> list:
 		means[i] = sum(columnValue) / float(len(dataset))
 	return means
 
-# Printing a real value scatter graph of current data set in ./graph folder 
-def createRealValueGraph(dataSetName: str, beta0, beta1):
-	dataReal = pd.read_csv('./data/{0}'.format(dataSetName))
-	graphName = dataSetName.split('.')
-	xReal = dataReal[dataReal.columns[0]]
-	yReal = dataReal[dataReal.columns[1]]
-	plt.scatter(xReal, yReal)
-	plt.title('Real values')
-	plt.xlabel('Km')
-	plt.ylabel('Price')
-	# plt.plot(xReal, beta0 + beta1 * xReal, 'r')
-	plt.savefig('./graphs/{0}_real.png'.format(graphName[0]))
-	plt.clf()
-
 def createNormalizedGraph(dataSetName: str, beta0, beta1):
-	dataReal = pd.read_csv('./data/{0}'.format(dataSetName))
+	dataNorm = pd.read_csv('./data/{0}'.format(dataSetName))
 	graphName = dataSetName.split('.')
-	xNorm = dataReal[dataReal.columns[0]]
-	yNorm = dataReal[dataReal.columns[1]]
+	xNorm = dataNorm[dataNorm.columns[0]]
+	yNorm = dataNorm[dataNorm.columns[1]]
 	plt.title('Normalized values')
 	plt.xlabel('Km')
 	plt.ylabel('Price')
