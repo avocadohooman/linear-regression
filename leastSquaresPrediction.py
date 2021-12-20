@@ -30,7 +30,6 @@ def calculateVariance(data, x):
 	SSxx = data.diffkmSquared.sum()
 	return SSxx
 
-
 # covariance: SSxy = SumOf((mean)x - x) * ((mean)y - y)
 def calculateCovariance(data, y):
 	priceMean = y.mean()

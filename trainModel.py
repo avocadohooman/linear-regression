@@ -9,7 +9,7 @@ from leastSquaresPrediction import createRealValueGraph
 
 # Here we prompt the user to provide the filne name of the data set for training the model
 # The file needs to be located in ./data
-def getCsvFileName() -> str:
+def getUserInput() -> str:
 	while 1:
 		print("Please enter the data set <name.csv> for training located in ./data")
 		try:
@@ -20,7 +20,35 @@ def getCsvFileName() -> str:
 			sys.exit('EOF on input. Exit...')
 		except:
 			sys.exit('EOF on input. Exit...')
-	return csvFile
+	while 1:
+		print("Please enter a desired learning rate between 0 and 1")
+		try:
+			learningRate = input()
+			if (float(learningRate) >= 0 and float(learningRate) <=1):
+				break 
+			else:
+				print('Not a valid value for the learning rate. Needs to be >= 0 AND <= 1')
+		except ValueError:
+			print('Not a valid value for the learning rate. Needs to be >= 0 AND <= 1')
+		except EOFError:
+			sys.exit('Error on Input. Exit..')
+		except:
+			sys.exit('Error on Input. Exit...')
+	while 1:
+		print("Please enter a number of epoches/cycles > 0")
+		try:
+			epoche = input()
+			if (int(epoche) > 0):
+				break 
+			else:
+				print('Not a valid value for the learning rate. Needs to be >= 0')
+		except ValueError:
+			print('Not a valid value for the learning rate. Needs to be >= 0')
+		except EOFError:
+			sys.exit('Error on Input. Exit..')
+		except:
+			sys.exit('Error on Input. Exit...')
+	return (csvFile, float(learningRate), int(epoche))
 
 # Here we parse the CSV file and store the data 
 # In case the file doesn't exist we throw an error
@@ -86,6 +114,8 @@ def predict(row, beta0, beta1):
 def gradientDecent(train, learningRate, numberEpoche):
 	beta0 = 0.0
 	beta1 = 0.0
+	print('learningRate', learningRate)
+	print('epoch', numberEpoche)
 	for epoch in range(numberEpoche):
 		sumError = 0
 		for row in train:
@@ -112,7 +142,7 @@ def saveNormalizedData(filtereDataSet, file):
 
 def main():
 	csvFile:str
-	csvFile = getCsvFileName()
+	csvFile, learningRate, epoch = getUserInput()
 	csvFilePath = './data/' + csvFile
 	dataset:list = parseCsvFile(csvFilePath)
 	filtereDataSet = removeNonDigitValues(dataset)
@@ -122,7 +152,7 @@ def main():
 	normalizeData(filtereDataSet, minmax)
 	tbeta0 = 0.0
 	tbeta1 = 0.0
-	tbeta0, tbeta1 = gradientDecent(filtereDataSet, 0.01, 500)
+	tbeta0, tbeta1 = gradientDecent(filtereDataSet, float(learningRate), int(epoch))
 	fileName = './coefficients/b0b1.csv'
 	normalizedFileName = './data/normalized_{0}'.format(csvFile)
 	print('tbeta0, tbeta1', tbeta0, tbeta1)

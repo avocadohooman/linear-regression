@@ -9,8 +9,8 @@ def getUserInput():
 	while 1:
 		print("Please enter a value for the prediction")
 		try:
-			value = input()
-			if (int(value) >= 0):
+			predictionValue = input()
+			if (int(predictionValue) >= 0):
 				break 
 			else:
 				print('Not a valid value for the prediction model. Needs to be >= 0')
@@ -20,7 +20,7 @@ def getUserInput():
 			sys.exit('Error on Input. Exit..')
 		except:
 			sys.exit('Error on Input. Exit...')
-	return float(value)
+	return (float(predictionValue))
 
 # Here we are loading the latest value for the coeffiecients beta0 and beta1
 # which have been trained with trainModel.py

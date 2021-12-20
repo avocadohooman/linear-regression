@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import pandas as pd
-from leastSquaresPrediction import createRealValueGraph
 
 # Nice way of printing a list
 def printList(label: str, list: list):
@@ -29,7 +28,6 @@ def createNormalizedGraph(dataSetName: str, beta0, beta1):
 	plt.plot(xNorm, beta0 + beta1 * xNorm, 'r')
 	plt.savefig('./graphs/{0}.png'.format(graphName[0]))
 	plt.clf()
-
 
 def normalizeElemt(min, max, inputValue):
 	return ((float(inputValue) - float(min)) / (float(max) - float(min)))
