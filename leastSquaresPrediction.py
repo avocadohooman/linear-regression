@@ -1,3 +1,4 @@
+from math import sqrt
 import pandas as pd
 import matplotlib.pyplot as plt
 import sys
@@ -56,6 +57,23 @@ def createRealValueGraph(dataSetName: str):
 	plt.savefig('./graphs/{0}_real.png'.format(graphName[0]))
 	plt.clf()
 
+def addPredictions(x, beta0, beta1):
+	predictedPrice = list()
+	for row in x:
+		predictedPrice.append(float(predict(row, beta0, beta1)))
+	return predictedPrice
+
+# RMSE is calculated as the square root of the mean of the squared differences between actual outcomes and predictions.
+# Squaring each error forces the values to be positive, 
+# and the square root of the mean squared error returns the error metric back to the original units for comparison.
+def calculateRMSEAccuracy(actualPrices, predictedPrices):
+	sum_error = 0.0
+	for i in range(len(actualPrices)):
+		prediction_error =  predictedPrices[i] - actualPrices[i]
+		sum_error += (prediction_error ** 2)
+	mean_error = sum_error / float(len(predictedPrices))
+	return sqrt(mean_error)
+
 def main():
 	## Here we check if the arguments given are exactly 2, if not show usage
 	if (len(sys.argv) != 2 or sys.argv[1].isdigit() == False):
@@ -74,6 +92,9 @@ def main():
 		print('beta0, beta1', beta0, beta1)
 		km = float(sys.argv[1])
 		print('predictedPrice', int(predict(km, beta0, beta1)))
+		predictedPrices = addPredictions(x, beta0, beta1)
+		rootMeanSquareError = calculateRMSEAccuracy(y, predictedPrices)
+		print('RMSE: %.3f' % (rootMeanSquareError))
 		plt.title('Real values')
 		plt.xlabel('Km')
 		plt.ylabel('Price')
