@@ -1,11 +1,8 @@
 import csv
 from io import TextIOWrapper
-import math
 from csv import reader, writer
 import sys
-import os
-from utils import printList, calculateMean, createNormalizedGraph
-from leastSquaresPrediction import createRealValueGraph
+from utils import createNormalizedGraph, printList
 
 # Here we prompt the user to provide the filne name of the data set for training the model
 # The file needs to be located in ./data
@@ -62,10 +59,10 @@ def parseCsvFile(filename:str) -> list:
 				if not row:
 					continue
 				dataset.append(row)
-			if len(dataset[0]) == 2:
+			if len(dataset) > 0 and len(dataset[0]) == 2:
 				print('Loaded dataset {0} with {1} rows and {2} columns'.format(filename, len(dataset), len(dataset[0])))
 				return dataset
-			sys.exit('Error: dataset needs to have exactly 2 colummns')
+			sys.exit('Error: dataset can\'t be empty and needs to have exactly 2 colummns')
 	except OSError:
 		sys.exit('Could not open/find file: {0}'.format(filename))
 
@@ -77,6 +74,8 @@ def convertStrToFloat(dataset:list, column: int):
 # remove any non digit rows from the dataset
 def removeNonDigitValues(dataset: list) -> list:
 	for idx, row in enumerate(dataset):
+		if len(row) > 2:
+			dataset.pop(idx)
 		if row[0].strip().isdigit() == False or row[1].strip().isdigit() == False:
 			dataset.pop(idx)
 	return dataset
@@ -92,7 +91,7 @@ def getMinMax(dataset:list) -> list:
 	return minmax
 
 # normalizing data with the equation normalizedValue = value - min / max - min
-# here we normaize data between the range 0 - 1
+# here we normalize data between the range 0 - 1
 def normalizeData(dataset: list, minmax: list):
 	for row in dataset:
 		for i in range(len(row)):
@@ -149,6 +148,7 @@ def main():
 	for i in range(len(filtereDataSet[0])):
 		convertStrToFloat(filtereDataSet, i)
 	minmax:list = getMinMax(filtereDataSet)
+	printList('filteredDataSet', filtereDataSet)
 	normalizeData(filtereDataSet, minmax)
 	tbeta0 = 0.0
 	tbeta1 = 0.0
@@ -159,7 +159,6 @@ def main():
 	saveCoefficient(tbeta0, tbeta1, minmax, fileName)
 	saveNormalizedData(filtereDataSet, normalizedFileName)
 	createNormalizedGraph('normalized_{0}'.format(csvFile), tbeta0, tbeta1)
-	createRealValueGraph(csvFile)
 
 if __name__ == "__main__":
 	main()

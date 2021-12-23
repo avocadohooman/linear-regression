@@ -100,7 +100,7 @@ def main():
 		plt.ylabel('Price')
 		plt.scatter(x, y)
 		plt.plot(x, beta0 + beta1*x, 'r')
-		plt.savefig('./graphs/simpleLinearRegressionModel.png')
+		plt.savefig('./graphs/leastSquaresPrediction.png')
 
 if __name__ == "__main__":
 	main()
