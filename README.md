@@ -78,8 +78,39 @@ def predict(km):
 ### Real value graph of least squares prediction
 ![leastSquaresPrediction](./graphs/leastSquaresPrediction.png?raw=true)
 
-## Step 2 - Training my model with a gradient descent algorithm
+## Method 2 - Training linear regression model with a gradient descent algorithm
 
-Work in progress.
+### Usage
+
+First, you will need to train the model (beta0, beta1), which are stored in ./coefficients/b0b1.csv
+The initial value for beta0 and beta1 is zero.
+
+```
+python3 trainModel.py
+```
+
+The program will prompt you to choose that data set for training the model, which needs to be located in './data/'.
+
+The CSV needs to follow certain formatting rules:
+
+- First row describes the column names
+- It can't be empty
+- It needs to have exactly two columns
+- It can only contain numeric values as int or float (besides the columns labels)
+
+```
+km, price
+240000,3650
+139800,3800
+150500,4400
+185530,4450
+.
+.
+.
+```
+
+
+
+
 
 
