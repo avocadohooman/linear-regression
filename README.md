@@ -89,7 +89,7 @@ The initial value for beta0 and beta1 is zero.
 python3 trainModel.py
 ```
 
-The program will prompt you to choose that data set for training the model, which needs to be located in './data/'.
+1) The program will prompt you to choose that data set for training the model, which needs to be located in './data/'.
 
 The CSV needs to follow certain formatting rules:
 
@@ -97,6 +97,8 @@ The CSV needs to follow certain formatting rules:
 - It can't be empty
 - It needs to have exactly two columns
 - It can only contain numeric values as int or float (besides the columns labels)
+
+#### Example
 
 ```
 km, price
@@ -108,6 +110,11 @@ km, price
 .
 .
 ```
+
+2) Then the program will ask you to select a learning rate between 0 - 1. 
+
+"Learning rate is a hyper-parameter that controls the weights of our linear regression model with respect to the loss gradient. A desirable learning rate is low enough that the network converges to something useful, but high enough that it can be trained in a reasonable amount of time. Smaller learning rates require more training epochs (requires more time to train) due to the smaller changes made to the weights in each update, whereas larger learning rates result in rapid changes and require fewer training epochs. ​ However, larger learning rates often result in a sub-optimal final set of weights. " - (https://www.educative.io/edpresso/learning-rate-in-machine-learning)
+
 
 
 
