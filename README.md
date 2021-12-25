@@ -101,7 +101,7 @@ The initial value for beta0 and beta1 is zero.
 python3 trainModel.py
 ```
 
-After you execute the program, do following steps:
+After you execute the program, you will be prompted to do the following steps:
 
 **1) Choose that data set for training the model, which needs to be located in './data/'**
 
