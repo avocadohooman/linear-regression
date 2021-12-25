@@ -16,6 +16,12 @@ cd linear-regression
 python3 -m pip install -r requirements.txt
 ```
 
+## Accuracy 
+
+To compare the accuracy of both methods, I am using the Root Mean Squared Error (RMSE) method. RMSE is calculated
+as the square root of the mean of the squared differences between actual outcomes and predictions. 
+Squaring each error forces the values to be positive, and the square root of the mean squared error returns the
+error metric back to the original units for comparison.
 
 ## Method 1 - Linear regression with least squares method
 
