@@ -131,11 +131,11 @@ km, price
 
 **3) Choose the number of epoch (iteration/cycles) the gradient descent should go through. The value needs be > 0**
 
-**4) The trained weights (b0, b1) are saved in ./coeffiecients/b0b1.csv which will be used for executing trainedGradientDescentPrediction.py**
+
+Finally, the trained weights/coefficients (b0, b1) are saved in ./coeffiecients/b0b1.csv which will be used for executing trainedGradientDescentPrediction.py
 
 
 ### Usage - trainedGradientDescentPrediction.py
-
 
 ```
 python3 trainedGradientDescentPrediction.py
