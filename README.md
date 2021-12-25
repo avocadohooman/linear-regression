@@ -94,7 +94,7 @@ error = prediction - expected
 
 ### Usage - trainModel.py
 
-First, you will need to train the model (beta0, beta1), which are stored in ./coefficients/b0b1.csv
+First, you will need to train the coefficients (beta0, beta1), which are stored in ./coefficients/b0b1.csv
 The initial value for beta0 and beta1 is zero.
 
 ```
