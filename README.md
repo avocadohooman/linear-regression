@@ -80,7 +80,19 @@ def predict(km):
 
 ## Method 2 - Training linear regression model with a gradient descent algorithm
 
-### Usage
+### Math
+
+During each iteration, the coefficients (w) in machine learning language are updated using the equation:
+
+`
+w(t+1) = w(t) - learningRate * error * input value
+`
+
+`
+error = prediction - expected
+`
+
+### Usage - trainModel.py
 
 First, you will need to train the model (beta0, beta1), which are stored in ./coefficients/b0b1.csv
 The initial value for beta0 and beta1 is zero.
@@ -88,6 +100,8 @@ The initial value for beta0 and beta1 is zero.
 ```
 python3 trainModel.py
 ```
+
+After you execute the program, do following steps:
 
 **1) Choose that data set for training the model, which needs to be located in './data/'**
 
@@ -118,7 +132,22 @@ km, price
 **3) Choose the number of epoch (iteration/cycles) the gradient descent should go through. The value needs be > 0.
 **
 
-**4) **
+**4) The trained weights (b0, b1) are saved in ./coeffiecients/b0b1.csv which will be used for executing trainedGradientDescentPrediction.py **
+
+
+### Usage - trainedGradientDescentPrediction.py
+
+
+```
+python3 trainedGradientDescentPrediction.py
+```
+
+Run the program and enter a value for the prediction.
+
+### Usage - accuracy.py
+
+Run this program to calculate the current RMSE of the trained model. It will use by default a dataset named 'data.csv' located in './data/' 
+
 
 
 
