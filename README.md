@@ -25,6 +25,8 @@ error metric back to the original units for comparison.
 
 ## Method 1 - Linear regression with least squares method
 
+It is using the data set ./data/data.csv 
+
 ### Usage
 
 ```
