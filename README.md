@@ -148,6 +148,8 @@ Run the program and enter a value for the prediction.
 
 Run this program to calculate the current RMSE of the trained model. It will use by default a dataset named 'data.csv' located in './data/' 
 
+### Normalized value graph of gradient descent algorithm method
+![normalizedData](./graphs/normalized_data.png?raw=true)
 
 
 
