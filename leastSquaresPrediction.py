@@ -21,23 +21,23 @@ def getColumnValues(data):
 	return (x, y)
 
 # To get bet0, the slope, we need to first calculate the SumOfSquare of x and the SumOfSquare of y
-# beta1 = SSxx/SSxy
-# variance: SSxx = SumOf((mean)x - x)^2 
+# beta1 = SSXX/SSXY
+# variance: SSXX = SumOf((mean)x - x)^2 
 def calculateVariance(data, x):
 	kmMean = x.mean()
 	data['kmMean'] = kmMean
 	data['diffkm'] = kmMean - x
 	data['diffkmSquared'] = data.diffkm ** 2
-	SSxx = data.diffkmSquared.sum()
-	return SSxx
+	SSXX = data.diffkmSquared.sum()
+	return SSXX
 
-# covariance: SSxy = SumOf((mean)x - x) * ((mean)y - y)
+# covariance: SSXY = SumOf((mean)x - x) * ((mean)y - y)
 def calculateCovariance(data, y):
 	priceMean = y.mean()
 	data['priceMean'] = priceMean
 	data['diffPrice'] = priceMean - y
-	SSxy = (data.diffkm * data.diffPrice).sum()
-	return SSxy
+	SSXY = (data.diffkm * data.diffPrice).sum()
+	return SSXY
 
 def createRealValueGraph(dataSetName: str):
 	dataReal = pd.read_csv('./data/{0}'.format(dataSetName))

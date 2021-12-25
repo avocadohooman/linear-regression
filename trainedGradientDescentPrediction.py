@@ -1,5 +1,4 @@
 import pandas as pd
-import matplotlib.pyplot as plt
 import sys
 from csv import reader
 from utils import normalizeElemt, denormalizeElem
@@ -67,7 +66,7 @@ def main():
 	minMaxX = list
 	minMaxY = list
 	coeff,minMaxX,minMaxY = getTrainedCoeffiecients()
-	print('predictedPrice', int(predict(coeff, minMaxX, minMaxY, inputValue)))
+	print('predictedPrice: ', int(predict(coeff, minMaxX, minMaxY, inputValue)))
 
 if __name__ == "__main__":
 	main()

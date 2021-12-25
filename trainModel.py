@@ -58,6 +58,8 @@ def parseCsvFile(filename:str) -> list:
 			for row in lines:
 				if not row:
 					continue
+				if len(row) != 2:
+					sys.exit('Error: dataset can\'t be empty and needs to have exactly 2 colummns')
 				dataset.append(row)
 			if len(dataset) > 0 and len(dataset[0]) == 2:
 				print('Loaded dataset {0} with {1} rows and {2} columns'.format(filename, len(dataset), len(dataset[0])))
@@ -68,16 +70,20 @@ def parseCsvFile(filename:str) -> list:
 
 # Converting string values to floats and removing any whitespaces with strip()
 def convertStrToFloat(dataset:list, column: int):
-	for row in dataset:
-			row[column] = float(row[column].strip())
+	try:
+		for row in dataset:
+				row[column] = float(row[column].strip())
+	except:
+		sys.exit('Error: convert str to float failed')
 
 # remove any non digit rows from the dataset
 def removeNonDigitValues(dataset: list) -> list:
-	for idx, row in enumerate(dataset):
-		if len(row) > 2:
-			dataset.pop(idx)
-		if row[0].strip().isdigit() == False or row[1].strip().isdigit() == False:
-			dataset.pop(idx)
+	try:
+		for row in dataset:
+			if row[0].strip().isdigit() == False or row[1].strip().isdigit() == False:
+				sys.exit('Faulty data set: dataset can only contain numeric values (int or float)')
+	except:
+		sys.exit('Faulty data set: dataset can only contain numeric values (int or float)')
 	return dataset
 
 # get min and max value for each column of the dataset
@@ -95,6 +101,8 @@ def getMinMax(dataset:list) -> list:
 def normalizeData(dataset: list, minmax: list):
 	for row in dataset:
 		for i in range(len(row)):
+			if minmax[i][1] == 0 and minmax[i][0] == 0:
+				sys.exit('Faulty data: min and max value can\'t be zero')
 			row[i] = (row[i] - minmax[i][0]) / (minmax[i][1] - minmax[i][0])
 
 # here we get the current yhat value with the current beta0 and beta1 coefficient
@@ -113,8 +121,6 @@ def predict(row, beta0, beta1):
 def gradientDecent(train, learningRate, numberEpoche):
 	beta0 = 0.0
 	beta1 = 0.0
-	print('learningRate', learningRate)
-	print('epoch', numberEpoche)
 	for epoch in range(numberEpoche):
 		sumError = 0
 		for row in train:
@@ -133,10 +139,10 @@ def saveCoefficient(tbeta0, tbeta1, minmax, file):
 		csvWriter.writerow([tbeta0, tbeta1])
 		csvWriter.writerows(minmax)
 
-def saveNormalizedData(filtereDataSet, file):
+def saveNormalizedData(filtereDataSet, file, columnLabels):
 	with open(file, 'w') as csvFile:
 		csvWriter = writer(csvFile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-		csvWriter.writerow(['km', 'price'])
+		csvWriter.writerow(columnLabels)
 		csvWriter.writerows(filtereDataSet)
 
 def main():
@@ -144,11 +150,11 @@ def main():
 	csvFile, learningRate, epoch = getUserInput()
 	csvFilePath = './data/' + csvFile
 	dataset:list = parseCsvFile(csvFilePath)
-	filtereDataSet = removeNonDigitValues(dataset)
+	columnLabels = dataset[0]
+	filtereDataSet = removeNonDigitValues(dataset[1:])
 	for i in range(len(filtereDataSet[0])):
 		convertStrToFloat(filtereDataSet, i)
 	minmax:list = getMinMax(filtereDataSet)
-	printList('filteredDataSet', filtereDataSet)
 	normalizeData(filtereDataSet, minmax)
 	tbeta0 = 0.0
 	tbeta1 = 0.0
@@ -157,7 +163,7 @@ def main():
 	normalizedFileName = './data/normalized_{0}'.format(csvFile)
 	print('tbeta0, tbeta1', tbeta0, tbeta1)
 	saveCoefficient(tbeta0, tbeta1, minmax, fileName)
-	saveNormalizedData(filtereDataSet, normalizedFileName)
+	saveNormalizedData(filtereDataSet, normalizedFileName, columnLabels)
 	createNormalizedGraph('normalized_{0}'.format(csvFile), tbeta0, tbeta1)
 
 if __name__ == "__main__":
